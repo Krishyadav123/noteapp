@@ -1,18 +1,38 @@
-import {SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import CustomButton from '../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import { BASE_URL } from '../apis/Api';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const navigation = useNavigation();
+
+
+  const registerUser = async () => {
+
+    const data = {
+      email,
+      password,
+      name,
+    }
+    try{
+      const response = await axios.post(`${BASE_URL}/auth/register`,data);
+      Alert.alert("Data", JSON.stringify(response.data));
+    }catch (error) {
+      Alert.alert('Error',error.message);
+    }
+
+  }
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Create New</Text>
       <TextInput
-        value={email}
-        onChangeText={text => setEmail(text)}
+        value={name}
+        onChangeText={text => setName(text)}
         placeholder="Name"
         style={styles.input}
       />
@@ -28,8 +48,11 @@ const Signup = () => {
         placeholder="Password"
         style={styles.input}
       />
-      <CustomButton title="Signup" onPress={() => {}} />
-    <Text style={styles.signupTxt} onPress={() => navigation.navigate('Signup')}>Or  <Text style={styles.signup}>Sign Up</Text> </Text>
+      <CustomButton title="Signup" onPress={() => {
+        registerUser();
+        // navigation.navigate('Login')
+      }} />
+    <Text style={styles.signupTxt} onPress={() => navigation.navigate('Login')}>Or  <Text style={styles.signup}>Sign Up</Text> </Text>
     </SafeAreaView>
   );
 };

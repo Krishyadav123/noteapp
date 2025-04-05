@@ -22,7 +22,7 @@ const Login = () => {
         placeholder="Password"
         style={styles.input}
       />
-      <CustomButton title="Login" onPress={() => {}} />
+      <CustomButton title="Login" onPress={() => {navigation.navigate('Main')}} />
     <Text style={styles.signupTxt} onPress={() => navigation.navigate('Signup')}>Or Create New Account <Text style={styles.signup}>Sign Up</Text> </Text>
     </SafeAreaView>
   );
