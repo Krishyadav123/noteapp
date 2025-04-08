@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://api.example.com' // Replace with your actual base URL
+export const BASE_URL = 'http://192.168.1.4:5001/api/' // Replace with your actual base URL

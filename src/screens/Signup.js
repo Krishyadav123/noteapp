@@ -13,23 +13,56 @@ const Signup = () => {
 
 
   const registerUser = async () => {
-
+    // Alert.alert("Button Working ✅");
+    console.log("Button Working ✅");
     const data = {
       email,
       password,
       name,
     }
+    // Alert.alert("Data", JSON.stringify(data));
     try{
-      const response = await axios.post(`${BASE_URL}/auth/register`,data);
-      Alert.alert("Data", JSON.stringify(response.data));
-    }catch (error) {
-      Alert.alert('Error',error.message);
+      
+       // Then try the actual registration
+    const response = await fetch('http://localhost:5001/api/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    
+    const responseData = await response.json();
+    console.log("Registration response:", responseData);
+    
+    if (response.ok) {
+      Alert.alert("Success", "Registration successful!");
+    } else {
+      Alert.alert("Error", responseData.error || "Registration failed");
     }
+  } catch (error) {
+    Alert.alert('Connection Error', "Could not connect to the server. Please check your network.");
+    console.log("Error details:", error);
+  }
 
   }
+  // const registerUser = async () => {
+  //   try {
+  //     const response = await axios.get(`${BASE_URL}/`);
+  //     Alert.alert("Connecteddd");
+  //   } catch (error) {
+  //     Alert.alert("Error", error.message);
+  //   }
+  // };
+
+  // const registerUser = async () => {
+  //   Alert.alert("Button Working ✅");
+  // };
+  
+  
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Create New</Text>
+      <Text style={styles.title}>Create Neww</Text>
       <TextInput
         value={name}
         onChangeText={text => setName(text)}
