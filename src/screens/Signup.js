@@ -12,52 +12,22 @@ const Signup = () => {
   const navigation = useNavigation();
 
 
+
   const registerUser = async () => {
-    // Alert.alert("Button Working ✅");
-    console.log("Button Working ✅");
     const data = {
       email,
       password,
       name,
     }
-    // Alert.alert("Data", JSON.stringify(data));
-    try{
-      
-       // Then try the actual registration
-    const response = await fetch('http://localhost:5001/api/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    
-    const responseData = await response.json();
-    console.log("Registration response:", responseData);
-    
-    if (response.ok) {
-      Alert.alert("Success", "Registration successful!");
-    } else {
-      Alert.alert("Error", responseData.error || "Registration failed");
+    try {
+      const response = await axios.post(`${BASE_URL}auth/register`, data);
+     Alert.alert("User registered successfully", JSON.stringify(response.data))
+     navigation.goBack()
+    } catch (error) {
+      console.error('Error registering user:', error.response.data.message);
+      Alert.alert("Error", error.message)
     }
-  } catch (error) {
-    Alert.alert('Connection Error', "Could not connect to the server. Please check your network.");
-    console.log("Error details:", error);
-  }
-
-  }
-  // const registerUser = async () => {
-  //   try {
-  //     const response = await axios.get(`${BASE_URL}/`);
-  //     Alert.alert("Connecteddd");
-  //   } catch (error) {
-  //     Alert.alert("Error", error.message);
-  //   }
-  // };
-
-  // const registerUser = async () => {
-  //   Alert.alert("Button Working ✅");
-  // };
+  };
   
   
   return (

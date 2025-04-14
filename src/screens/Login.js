@@ -1,12 +1,31 @@
-import {SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import CustomButton from '../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import { BASE_URL } from '../apis/Api';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
+
+  const loginUser = async () => {
+    const data = {
+      email,
+      password,
+    }
+    try {
+      const response = await axios.post(`${BASE_URL}auth/login`, data);
+      navigation.navigate("Main", {
+        data: response.data,
+      })
+    } catch (error) {
+      console.error('Error registering user:', error.response.data.message);
+      Alert.alert("Error", error.message)
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Login</Text>
@@ -22,7 +41,7 @@ const Login = () => {
         placeholder="Password"
         style={styles.input}
       />
-      <CustomButton title="Login" onPress={() => {navigation.navigate('Main')}} />
+      <CustomButton title="Login" onPress={() => loginUser()} />
     <Text style={styles.signupTxt} onPress={() => navigation.navigate('Signup')}>Or Create New Account <Text style={styles.signup}>Sign Up</Text> </Text>
     </SafeAreaView>
   );

@@ -4,6 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../bottom/Home';
 import AddNote from '../bottom/AddNote';
 import Profile from '../bottom/Profile';
+import HomeNavigator from '../../navigations/HomeNavigator';
 
 const Bottom = createBottomTabNavigator();
 const BottomScreen = () => {
@@ -11,7 +12,7 @@ const BottomScreen = () => {
     <Bottom.Navigator screenOptions={{headerShown: false}}>
       <Bottom.Screen
         name="Home"
-        component={Home}
+        component={HomeNavigator}
         options={{
           tabBarIcon: ({color, size}) => {
             return (
